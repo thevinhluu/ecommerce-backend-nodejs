@@ -8,13 +8,17 @@
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "anonystick <anonystick@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "compression": "^1.8.1",
+    "crypto": "^1.0.1",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
     "mongoose": "^8.17.1",
     "morgan": "^1.10.1"
   }
