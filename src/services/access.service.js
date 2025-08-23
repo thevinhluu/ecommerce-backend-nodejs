@@ -21,6 +21,12 @@ const RoleShop = {
 };
 
 class AccessService {
+  static logout = async (keyStore) => {
+    const delKey = await KeyTokenService.removeKeyById(keyStore.id);
+    console.log({ delKey });
+    return delKey;
+  };
+
   /*
     1 - check email in dbs
     2 - match password
@@ -32,15 +38,16 @@ class AccessService {
     //1.
     const foundShop = await findByEmail({ email });
     if (!foundShop) throw new BadRequestError("Shop not registered");
+
     //2.
     const match = await bcrypt.compare(password, foundShop.password);
     if (!match) throw new AuthFailureErrorilureError("Authentication error");
+
     //3.
     // created privateKey, publicKey
     const privateKey = crypto.randomBytes(64).toString("hex");
     const publicKey = crypto.randomBytes(64).toString("hex");
-    console.log("privateKey", privateKey);
-    console.log("publicKey", publicKey);
+
     //4. generate tokens
     const { _id: userId } = foundShop;
     const tokens = await createTokenPair(
@@ -55,6 +62,7 @@ class AccessService {
       publicKey,
     });
 
+    //5.
     return {
       shop: getInfoData({
         fields: ["_id", "name", "email"],
