@@ -1,6 +1,6 @@
 "use strict";
 
-const keytokenModel = require("../model/keytoken.model");
+const keytokenModel = require("../models/keytoken.model");
 const { Types } = require("mongoose");
 
 class KeyTokenService {
@@ -49,11 +49,25 @@ class KeyTokenService {
   };
 
   static findByUserId = async (userId) => {
-    return await keytokenModel.findOne({ user: userId }).lean();
+    return await keytokenModel.findOne({ user: userId });
   };
 
   static removeKeyById = async (id) => {
     return await keytokenModel.deleteOne(id);
+  };
+
+  static findByRefreshTokenUsed = async (refreshToken) => {
+    return await keytokenModel
+      .findOne({ refreshTokensUsed: refreshToken })
+      .lean();
+  };
+
+  static findByRefreshToken = async (refreshToken) => {
+    return await keytokenModel.findOne({ refreshToken });
+  };
+
+  static deleteKeyById = async (userId) => {
+    return await keytokenModel.deleteOne({ user: userId });
   };
 }
 
